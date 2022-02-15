@@ -21,41 +21,59 @@ export class BorreyApp extends LitElement {
             flex-direction : column;            
             overflow : none;
         }
+        
         #main-article{
             flex-grow : 1;
             display : flex;
             flex-direction : column;
         }
+        
         #main-section{
             overflow: auto;
             border:1px solid orange;
+            height : 100%;
+        }
+        #main-article.split #main-section{
+            height : 50%;
             resize : vertical;
         }
+
         #main-aside{
             overflow: auto;
             border:1px solid green;
+            display : none;
+        }
+        #main-article.split #main-aside{
             flex-grow : 1;
         }
-        hr{
+
+        #main-article.split hr#main-split{
+            display : block;
+        }
+        hr#main-split{
+            display : none;
             cursor: row-resize;
+            background-color: white;
             height : 1em;
             margin: 0;
             border: 1px solid;
             text-align: center;
         }
-        hr:before {
+        hr#main-split:before {
             content: "\\2022 \\2022 \\2022";
         }
     `;
     
       static get properties() {
         return {
-            rand : { type : Number }
+            rand : { type : Number },
+            split : { type : Boolean }
         };
       }
     
       constructor() {
         super();
+        this.split = false;
         this.dialog = null;///close() //show() //showModal() //focusout:https://gist.github.com/samthor/babe9fad4a65625b301ba482dad284d1
       }
       firstUpdated( changedProps ){
@@ -79,11 +97,15 @@ export class BorreyApp extends LitElement {
             </h1>
         </header>
         <nav></nav>
-        <article id='main-article'>
+        <article id='main-article' class='${this.split ? "split" : "" }'>
             <section id='main-section' class="column-1">
+                <div>
+                    <label>Split View <input type='checkbox' .checked=${this.split} @change=${this._splitOption}></label>
+
+                </div>
                 Hello world 
             </section>
-            <hr title='resize section' role='separator' @mousedown='${this._splitmousedown}' @blur='${this._splitblur}' @focus="${this._splitfocus}" id='main-split' tabindex="0"/>
+            <hr id='main-split' tabindex="0" title='resize section' role='separator' @keydown='${this._splitKeyHandler}' @mousedown='${this._splitmousedown}' @blur='${this._splitblur}' @focus="${this._splitfocus}" />
             <aside id='main-aside' class="column-3">
                 Asside
             </aside>    
@@ -102,18 +124,27 @@ export class BorreyApp extends LitElement {
         this.rand = Math.random();
       }
       _dialog( event ){
-          console.log('dialog');
           this.dialog.showModal();
       }
 
+      _splitOption( event ){
+        this.split=(event.target.checked);
+        this.section = this.shadowRoot.querySelector('#main-section');
+        this.section.style.removeProperty('height');;
+      }
       _splitKeyHandler( event ){
         const e = event || window.event;
-        if (e.keyCode == '38') {
-            // up arrow
-            
-        } else if (e.keyCode == '40') {
-            // down arrow
+        this.sectionHeight = this.section.getBoundingClientRect().height;
+        let h = 0;
+        let dy = 10;
+        if (e.keyCode == '38') {// up arrow
+            h = ((this.sectionHeight - dy) * 100) / this.section.parentNode.getBoundingClientRect().height;    
+        } else if (e.keyCode == '40') {// down arrow
+            h = ((this.sectionHeight + dy) * 100) / this.section.parentNode.getBoundingClientRect().height;
+        }else{
+            return;
         }
+        this.section.style.height = `${h}%`;
      }
       _splitmousedown(event){
         x = event.clientX;
@@ -124,7 +155,7 @@ export class BorreyApp extends LitElement {
         
         this.sectionHeight = this.section.getBoundingClientRect().height;
         document.addEventListener('mousemove', mouseMoveHandler,true);
-        document.addEventListener('mouseup', this.mouseUpHandler.bind(this),true);
+        
       }
       
       _splitfocus(event){
@@ -137,14 +168,10 @@ export class BorreyApp extends LitElement {
       
       mouseMoveHandler(event) {
         // How far the mouse has been moved
-        //this.section = this.shadowRoot.querySelector('#main-section');
         const dx = event.clientX - x;
         const dy = event.clientY - y;
-        
         const h = ((this.sectionHeight + dy) * 100) / this.section.parentNode.getBoundingClientRect().height;
         this.section.style.height = `${h}%`;
-        //const newLeftWidth = ((leftWidth + dx) * 100) / resizer.parentNode.getBoundingClientRect().width;
-        //leftSide.style.width = `${newLeftWidth}%`;
     };
 }
 
