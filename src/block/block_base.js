@@ -1,12 +1,13 @@
 import {LitElement, html, css} from 'lit';
 import {mainThemes, colourScemes} from '../themes'
 
-const defaultStyle = {
-    navMarginOpen : css`10em`
-}
 
 export class BorreyBlock extends LitElement {
-    static styles = [mainThemes,css`
+    static defaultStyle = {
+        navMarginOpen : css`10em`
+    }
+    
+    static styles = [mainThemes, css`
     :host{
         display: grid;
         grid-template-areas:
@@ -14,7 +15,7 @@ export class BorreyBlock extends LitElement {
             "side content";
         max-height: 100%;
         overflow : auto;
-        grid-template-columns: ${ defaultStyle.navMarginOpen }  auto;
+        grid-template-columns: 10em  auto;
     }
     article.content{
         grid-area: content;
@@ -47,7 +48,9 @@ export class BorreyBlock extends LitElement {
     div.top-bar{
         display : flex;
         align-items : center;
+        justify-content:space-between;
         grid-area : top;
+        
     }
     .block-nav ul{
         overflow : auto;
@@ -68,6 +71,9 @@ export class BorreyBlock extends LitElement {
 
     constructor() {
         super();
+        this.defaultStyle = {
+            navMarginOpen : css`10em`
+        };
         this.title = 'Unknown Title';//label
         this.icon = '?';
         this.content = 'default content';

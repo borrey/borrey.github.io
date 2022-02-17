@@ -5,6 +5,8 @@ import resolve from '@rollup/plugin-node-resolve';
 import {terser} from 'rollup-plugin-terser';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
 import summary from 'rollup-plugin-summary';
+import litcss from 'rollup-plugin-lit-css';
+
 
 export default {
   plugins: [
@@ -13,6 +15,7 @@ export default {
     html({
       input: 'index.html',
     }),
+    litcss({ specifier: 'lit-element' }),
     // Resolve bare module specifiers to relative paths
     resolve(),
     // Minify HTML template literals
@@ -28,10 +31,11 @@ export default {
     // Optional: copy any static assets to build directory
     copy({
       patterns: ['images/**/*'],
-    }),
+    })
   ],
   output: {
     dir: 'build',
   },
   preserveEntrySignatures: 'strict',
+  
 };

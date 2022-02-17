@@ -152,7 +152,7 @@ export class BorreyApp extends LitElement {
                 <borrey-block></borrey-block>
                 <!--<borrey-question-set></borrey-question-set> -->
             </section>
-            <hr id='main-split' tabindex="0" title='resize section' aria-orientation=horizontal role='separator' @doubleclick='${ this._splittoggle }' @keydown='${this._splitKeyHandler}' @mousedown='${this._splitmousedown}' @blur='${this._splitblur}' @focus="${this._splitfocus}" />
+            <hr id='main-split' tabindex="0" title='resize section' aria-orientation=horizontal role='separator' @dblclick='${ this._splittoggle }' @keydown='${this._splitKeyHandler}' @mousedown='${this._splitmousedown}' @blur='${this._splitblur}' @focus="${this._splitfocus}" />
             <aside id='main-aside' class="">
                 Asside
             </aside>    
@@ -177,6 +177,7 @@ export class BorreyApp extends LitElement {
       _splittoggle( event ){
           console.log('splittoggle');
           this.split = false;
+          this.section.style.height = `${100}%`;
         event.preventDefault();
         event.stopPropagation();
       }
