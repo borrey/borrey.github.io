@@ -9,13 +9,12 @@ export class BorreyBlock extends LitElement {
     static styles = [mainThemes,css`
     :host{
         display: grid;
-        grid-template-columns: ${ defaultStyle.navMarginOpen }  auto;
-        
         grid-template-areas:
             "top top"
             "side content";
         max-height: 100%;
         overflow : auto;
+        grid-template-columns: ${ defaultStyle.navMarginOpen }  auto;
     }
     article.content{
         grid-area: content;
@@ -24,11 +23,8 @@ export class BorreyBlock extends LitElement {
     }
     aside.side-nav{
         grid-area : side;
-        position: relative;
-        left: -8px;
         display : flex;
         flex-direction : column;
-        
     }
     aside.side-nav .block-nav, aside.side-nav .share{
         border-right: 8px solid transparent;
@@ -46,29 +42,6 @@ export class BorreyBlock extends LitElement {
     aside.side-nav .share{
         background: #f9fbba;
         min-height : 3em;
-    }
-
-    aside.side-nav .block-nav:before{
-        content: " ";
-        display: block;
-        border-left: 8px solid transparent;
-        border-bottom: 8px solid #ccc;
-        width: 0;
-        height: 16px;
-        position: absolute;
-        left: -1px;
-        top: -24px;
-    }
-    aside.side-nav .share:before {
-        content: " ";
-        display: block;
-        border-left: 8px solid transparent;
-        border-bottom: 8px solid #ccc;
-        width: 0;
-        height: 16px;
-        position: absolute;
-        left: -1px;
-        top: -24px;
     }
     
     div.top-bar{
