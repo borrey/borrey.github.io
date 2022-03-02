@@ -1,13 +1,11 @@
 import {LitElement, html, css} from 'lit';
-import {mainThemes, colourScemes} from '../themes'
+import {mainThemes, icons} from '../themes';
+
 
 
 export class BorreyBlock extends LitElement {
-    static defaultStyle = {
-        navMarginOpen : css`10em`
-    }
     
-    static styles = [mainThemes, css`
+    static styles = [icons,mainThemes, css`
     :host{
         display: grid;
         grid-template-areas:
@@ -71,9 +69,7 @@ export class BorreyBlock extends LitElement {
 
     constructor() {
         super();
-        this.defaultStyle = {
-            navMarginOpen : css`10em`
-        };
+
         this.title = 'Unknown Title';//label
         this.icon = '?';
         this.content = 'default content';
@@ -119,7 +115,7 @@ export class BorreyBlock extends LitElement {
         return html`
             <section>
             <p>
-                Lorem ipsum dolor sit amet, 
+                Lorem ipsum dolor sit amet, <a href='/block/23/32' data-internal-link>Sample section</a>
                 </p>
             </section>
         `;

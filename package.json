@@ -19,14 +19,28 @@
   },
   "homepage": "https://github.com/borrey/borrey.github.io#readme",
   "dependencies": {
+    "@bundled-es-modules/pdfjs-dist": "^2.5.207-rc1",
+    "@codemirror/basic-setup": "^0.19.1",
+    "@codemirror/lang-javascript": "^0.19.7",
     "@webcomponents/template": "^1.5.0",
     "dialog-polyfill": "^0.5.6",
-    "lit": "^2.1.3"
+    "jspreadsheet-ce": "^4.10.1",
+    "katex": "^0.15.2",
+    "lit": "^2.1.3",
+    "material-icons": "^1.10.7",
+    "mathjax3": "^3.0.0-beta.4",
+    "P.js": "git+ssh://git.muchlearning.org/srv/git/lib/js/P.js.git",
+    "pallets": "git+ssh://git.muchlearning.org/srv/git/muchlearning/pallets.git",
+    "pdfjs-dist": "^2.13.216",
+    "smarttype": "git+ssh://git.muchlearning.org/srv/git/lib/js/smarttype.git",
+    "x-data-spreadsheet": "^1.0.27",
+    "xlsx": "^0.18.2"
   },
   "devDependencies": {
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.16.11",
     "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^21.0.2",
     "@rollup/plugin-node-resolve": "^13.1.3",
     "@web/dev-server": "^0.1.29",
     "@web/dev-server-esbuild": "^0.2.16",
@@ -39,8 +53,12 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "rollup": "^2.67.2",
+    "rollup-plugin-execute": "^1.1.1",
+    "rollup-plugin-import-css": "^3.0.2",
+    "rollup-plugin-less": "^1.1.3",
     "rollup-plugin-lit-css": "^3.2.1",
     "rollup-plugin-minify-html-literals": "^1.2.6",
+    "rollup-plugin-styles": "^4.0.0",
     "rollup-plugin-summary": "^1.3.0",
     "rollup-plugin-terser": "^7.0.2"
   }
