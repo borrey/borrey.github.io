@@ -102,14 +102,7 @@ const toolsMap = tools.reduce((_toolsMap, tool) => {
     return _toolsMap
   }, {});
 
-const getEventCoordinates = function( event ){
-    return {
-        x : ( event.layerX || event.layerX === 0 ) ? 
-        event.layerX : event.offsetX,
-        y : ( event.layerY || event.layerY === 0 ) ? 
-        event.layerY : event.offsetY
-    };
-}
+
 export class InputDraw extends BorreyInput {
     constructor(){
         super();
@@ -180,8 +173,8 @@ export class InputDraw extends BorreyInput {
     _getInput(){
         return html`
             <section style='position:relative;'>
-                <canvas width='${this.width}' height='${this.height}' name='attempt' @mousedown='${this._start }' @mousemove='${this._update}' @mouseup='${this._finish}'></canvas>
-                <canvas width='${this.width}' height='${this.height}' style='position:absolute; left:0; top:0' name='current_layer' @mousedown='${this._start }' @mousemove='${this._update}' @mouseup='${this._finish}'></canvas>
+                <canvas width='${this.width}' height='${this.height}' name='attempt' @touchstart='${this._start }' @touchmove='${this._update}' @touchend='${this._finish}' @mousedown='${this._start }' @mousemove='${this._update}' @mouseup='${this._finish}'></canvas>
+                <!--<canvas width='${this.width}' height='${this.height}' style='position:absolute; left:0; top:0' name='current_layer' @mousedown='${this._start }' @mousemove='${this._update}' @mouseup='${this._finish}'></canvas>-->
             </section>    
             <section>
                 <button @click='${this.undo}' ?disabled=${this.actionStack.length<=0}>undo</button>
@@ -192,21 +185,38 @@ export class InputDraw extends BorreyInput {
             </section>
         `;
     }
+    getEventCoordinates = function( event, canvas ){
+
+        let clientX = event.offsetX || event.layerX;// || event.touches[0].offsetX || event.touches[0].layerX;
+        let clientY = event.offsetY || event.layerY;// event.touches[0].offsetY || event.touches[0].layerY;
+        if(!clientX && !clientY && event.touches && event.touches[0] && event.touches[0].clientX && event.touches[0].clientY){
+            const { left, top } = event.target.getBoundingClientRect();
+            clientX = event.touches[0].clientX - left;
+            clientY = event.touches[0].clientY - top;
+            event.preventDefault();
+        }
+        
+        return {
+            x : event.layerX || clientX,
+            y : event.layerY || clientY
+        };
+    }
     _start(event){
+        
         this.currentAction = { 
             type : this.currentActionType, 
-            start : getEventCoordinates(event), 
+            start : this.getEventCoordinates(event, this.shadowRoot.querySelector('canvas[name=attempt]')), 
             update :[], 
             end: null 
         };
     }
     _update(event){
         if( this.currentAction && this.currentAction.update ){
-            this.currentAction.update.push(getEventCoordinates(event));    
+            this.currentAction.update.push( this.getEventCoordinates(event, this.shadowRoot.querySelector('canvas[name=attempt]')));    
         }
     }
     _finish(event){
-        this.currentAction.end = getEventCoordinates(event);
+        this.currentAction.end = this.getEventCoordinates(event, this.shadowRoot.querySelector('canvas[name=attempt]'));
         this.actionStack = [ ...this.actionStack, this.currentAction ];
         this.runAction(this.currentAction);
         this.currentAction=null;

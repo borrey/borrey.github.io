@@ -1,6 +1,6 @@
 import Spreadsheet from "x-data-spreadsheet";//https://bossanova.uk/jspreadsheet/v4/examples/spreadsheet-webcomponent
 import * as XLSX from 'xlsx';
-import {html, css } from 'lit-element';
+import {html, css } from 'lit';
 import {InputLong} from './borrey_long';
 
 export class InputExcel extends InputLong {

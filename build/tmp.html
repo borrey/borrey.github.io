@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+  <body>
+      <div id="has_alert"></div>
+    <!-- https://www.youtube.com/watch?v=lFcSrYw-ARY getDuration() seekTo() -->
+    <div style="pointer-events: none;">
+        <iframe id="player" width="560" height="315" src="https://www.youtube.com/embed/lFcSrYw-ARY?enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" ></iframe>
+    </div>
+    <div>
+
+        <button id='play_button'>Play</button><button id='stop_button'>Stop</button><button id='pause_button'>Pause</button>
+    </div>
+
+    <script>
+      var tag = document.createElement('script');
+  tag.id = 'iframe-demo';
+  tag.src = 'https://www.youtube.com/iframe_api';
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+        playerVars : {
+            'autoplay': 0, 'controls': 0, 'rel' : 0, 'controls': 0 
+        }
+        /*events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }*/
+    });
+  }
+
+      function stopVideo() {
+          console.log('stopped');
+        player.stopVideo();
+      }
+
+      document.querySelector('#play_button').addEventListener('click',( event )=>{
+        event.preventDefault();
+        player.playVideo();
+      });
+      document.querySelector('#stop_button').addEventListener('click',( event )=>{
+        event.preventDefault();
+        player.stopVideo();
+      });
+      document.querySelector('#pause_button').addEventListener('click',( event )=>{
+        event.preventDefault();
+        player.pauseVideo();
+      });
+
+      if(document.hasFocus()){
+          console.log('a');
+        document.querySelector('#has_alert').innerHTML='has focus';
+      }else{
+        console.log('b');
+        document.querySelector('#has_alert').innerHTML='does not have focus';
+      }
+      window.addEventListener('blur', function( event ){
+        document.querySelector('#has_alert').innerHTML='lost focus';
+      });
+      window.addEventListener('focus', function( event ){
+        document.querySelector('#has_alert').innerHTML='has focus';
+      });
+    </script>
+  </body>
+</html>

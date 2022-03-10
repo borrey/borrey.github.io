@@ -2,7 +2,7 @@
 //https://bossanova.uk/jspreadsheet/v4/docs/programmatically-changes
 import jspreadsheet from 'jspreadsheet-ce'
 import * as XLSX from 'xlsx';
-import {html, css } from 'lit-element';
+import {html, css } from 'lit';
 import {InputLong} from './borrey_long';
 
 export class InputExcel extends InputLong {

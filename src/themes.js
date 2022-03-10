@@ -44,6 +44,9 @@ export const colourScemes = {
     }
 };
 export const mainThemes = css`
+    * {
+        box-sizing: border-box;
+    }
     a {
         color: #0000ee;
     }

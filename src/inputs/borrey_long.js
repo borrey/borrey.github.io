@@ -5,7 +5,7 @@
 
 //pre-entered answer?
 
-import {html, css} from 'lit-element';
+import {html, css} from 'lit';
 import {BorreyInput} from './borrey_input';
 
 export class InputLong extends BorreyInput {
@@ -25,9 +25,6 @@ export class InputLong extends BorreyInput {
     }
     static styles = [
         ...BorreyInput.styles, [css`
-            :host{
-                width : 100%;
-            }
             textarea[name=attempt]{
                 display:block;
                 width : 90%;
@@ -54,10 +51,3 @@ export class InputLong extends BorreyInput {
     }
 }
 customElements.define(InputLong.is, InputLong);
-
-/*export class InputLongEdit extends InputEdit {
-    static get is(){
-        return [InputLong.is,'edit'].join('-');
-    }
-}
-customElements.define(InputLongEdit.is, InputLongEdit);*/

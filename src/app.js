@@ -73,19 +73,6 @@ export class BorreyApp extends LitElement {
         </nav>
         <borrey-main-view id='main-article'></borrey-main-view>
         <a href='/block/23/32' data-internal-link>hello world</a>
-        <!--<article id='main-article' class='${this.split ? "split" : "" }'>
-            <section id='main-section' class="">
-                <div>
-                    <label>Split View <input type='checkbox' .checked=${this.split} @change=${this._splitOption}></label>
-                </div>
-                
-                
-            </section>
-            <hr id='main-split' tabindex="0" title='resize section' aria-orientation=horizontal role='separator' @dblclick='${ this._splittoggle }' @keydown='${this._splitKeyHandler}' @mousedown='${this._splitmousedown}' @blur='${this._splitblur}' @focus="${this._splitfocus}" />
-            <aside id='main-aside' class="">
-                Asside
-            </aside>    
-        </article>-->
         <footer id='main-footer'>
             <button @click="${this._dialog}">Click Me!</button>
             <button @click="${this._rand}">Random:</button>

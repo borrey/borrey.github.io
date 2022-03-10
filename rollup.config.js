@@ -30,6 +30,7 @@ export default {
 
     //@import 'material-icons/iconfont/material-icons.css';
     execute('cp node_modules/@bundled-es-modules/pdfjs-dist/build/pdf.worker.min.js build/assets/pdf.worker.js'),
+    execute('cp favicon.ico build/favicon.ico'),
     // Minify JS
     terser({
       ecma: 2020,

@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 
 import '../block/input-preview';
 import {mainThemes, icons} from '../themes';
-import {inputCommon} from './input-themes'
+import {inputCommon} from './input-themes';
 
 export class BorreyInput extends LitElement {
     static styles = [mainThemes,inputCommon, icons];

@@ -1,4 +1,4 @@
-import {html, css} from 'lit-element';
+import {html, css} from 'lit';
 import {InputShort} from './borrey_short';
 import 'pallets/javascript/pallet';
 //import '';

@@ -12,6 +12,9 @@ import '../inputs/input-xslx';
 import '../inputs/input-math';
 import '../inputs/borrey_long';
 import '../inputs/borrey_choice';
+
+import '../inputs/input-edit';
+
 import './pdf_view';
 export function DashboardViewHandler(){
     console.log('Show Dashboard');
@@ -59,6 +62,9 @@ export class BorreyMainView extends LitElement{
     }
 
     static styles = css`
+        *{
+            box-sizing: border-box;
+        }    
         :host{
             min-width : 53em;
             max-width: 100vw;
@@ -135,11 +141,14 @@ export class BorreyMainView extends LitElement{
         this.split = false;
         this.fullScreen = false;
         this.initial_try = true;
+        const that= this;
         this.addEventListener('fullscreenchange', event => { 
             
             if(this.initial_try && !document.fullscreenElement ){
                 alert('warning: should be fullscreen');
-                //this.openFullscreen();
+                that.fullScreen = false;
+                alert('warning: should be fullscreen', );
+                that.initial_try=false;
             }
             
         });
@@ -153,6 +162,7 @@ export class BorreyMainView extends LitElement{
                     <label>Split View <input type='checkbox' .checked=${this.split} @change=${this._splitOption}></label>
                     <label>Full Screen View <input type='checkbox' .checked=${this.fullScreen} @change=${this._fullScreenOption}></label>
                 </div>
+                <borrey-input-edit></borrey-input-edit>
                 <input-long></input-long>
                 <input-short></input-short>
                 <input-math></input-math>
@@ -174,14 +184,23 @@ export class BorreyMainView extends LitElement{
     _fullScreenOption( event ){
         this.fullScreen=(event.target.checked);
         if(this.fullScreen){
+
             this.openFullscreen();
         }else{
+
             this.closeFullscreen();
         }
     }
     openFullscreen() {
+
         if (this.requestFullscreen) {
-            this.requestFullscreen();
+            
+            const tmp = this.requestFullscreen().then(()=>{
+                console.log('done fullscreen');
+            }).catch(err => {
+                console.error('fullscreen error ',err);
+            });
+            console.log('full screen',tmp);
         } else if (this.webkitRequestFullscreen) { /* Safari */
             this.webkitRequestFullscreen();
         } else if (this.msRequestFullscreen) { /* IE11 */
@@ -189,6 +208,11 @@ export class BorreyMainView extends LitElement{
         }
     }
     closeFullscreen() {
+        console.log('close full screen');
+        if(!document.fullscreenElement){
+            console.error('not in fullscreen');
+            return;
+        }
         if (document.exitFullscreen) {
           document.exitFullscreen();
         } else if (document.webkitExitFullscreen) { /* Safari */

@@ -1,4 +1,4 @@
-import {html, css } from 'lit-element';
+import {html, css } from 'lit';
 import {InputLong} from './borrey_long';
 import {EditorState, EditorView, basicSetup} from "@codemirror/basic-setup"
 import {javascript} from "@codemirror/lang-javascript"
