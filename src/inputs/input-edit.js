@@ -46,7 +46,7 @@ export class BorreyEditInput extends BorreyInput {
             { name : 'excel sheet', obj : InputExcel },
             { name : 'draw', obj : InputDraw }            
         ];
-        this.answerType = this.answerTypes[0];
+        this.answerType = this.answerTypes[0]['name'];
     }
     _submit(event){
         event.preventDefault();
@@ -54,7 +54,7 @@ export class BorreyEditInput extends BorreyInput {
         this.pushAttempt( this.shadowRoot.querySelector('input[name=attempt]').value );
     }
     pushAttempt( attempt ){
-        this.history = [...this.history, { display : attempt, mark : this.history.length ? 0 : 1 }];
+        this.history = [...this.history, { display : attempt, max_mark : this.history.length ? 0 : 100 }];
     }
     render() {//${unsafeHTML()}
         return html`
@@ -63,8 +63,21 @@ export class BorreyEditInput extends BorreyInput {
                     ${this.answerTypes.map( type=>{ return this.getAnswerTypeOption(type.name) })}
                 </select>
             </label>
-            ${ this.getKeyEntryForm( this.answerType ) }
+            <section>
+                ${ this.getKeyEntryForm( this.answerType ) }
+            </section>
+            <details class='attempt_history'>
+                <summary>${this.history.length} ${ this.history.length==1?'Answer key':'Answer keys'}</summary>
+                <ol >
+                    ${ this.history.map( this._historyView.bind(this) ) }
+                </ol>
+            </details>
         `;
+    }
+    _submit(event){
+        event.preventDefault();
+        event.stopPropagation();
+        this.pushAttempt( this.shadowRoot.querySelector('input[name=attempt]').value );
     }
     getAnswerTypeOption( type ){
         return html`
@@ -72,27 +85,27 @@ export class BorreyEditInput extends BorreyInput {
         `;
     }
     getKeyEntryForm( answerType){
-        const typeObj =  this.answerTypes.find( type=> answerType==type );
-        typeObj.getEditForm();
-        console.log('key form:',typeObj);
+        const typeObj =  this.answerTypes.find( type=>{
+            return answerType==type.name;
+        } );
+        return typeObj.obj.getEditForm( this._submit, "Add Key" );
     }
     _answerTypeChanged(event){
         this.answerType = event.target.value;
-        console.log('answer type Changed', this.answerType);
     }
     _historyView( attempt, idx ){
         return html`
             <li>
                 <div class='attempt'>
                     <input-preview .html='${'<strong>'+attempt.display+'</strong>'}'></input-preview>
-                    <input type='number' name='mark_${idx}' min='0' max='1' @change=${this.attemptUpdateMark}>
+                    <label>Max Mark: <input type='number' name='mark_${idx}' min='0' max='100' value=${attempt.max_mark} @change=${ (event)=>{this.attemptUpdateMark( attempt, idx, event )}}></label>
                 </div>
             </li>
         `;
     }
 
-    attemptUpdateMark( event ){
-        console.log('update make', event.target, event.target.value );
+    attemptUpdateMark( attempt, idx, event ){
+        attempt.max_mark = event.target.value;
     }
 }
 

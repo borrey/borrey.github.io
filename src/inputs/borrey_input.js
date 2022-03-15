@@ -70,6 +70,11 @@ export class BorreyInput extends LitElement {
             </details>
         `;
     }
+    static getEditForm( submit, actionLabel ){
+        return html`<input type='text' name='attempt'/>
+        <br/>
+        <input type='submit' @click='${submit}' value='${actionLabel}'/>`;
+    }
 }
 
 

@@ -3,8 +3,8 @@ import {BorreyBlock} from './block_base';
 
 //<borrey-block></borrey-block>
 
-import '../block/block_base';
-import '../block/question_set';
+import './question-block';
+import './question_set';
 import '../inputs/borrey_input';
 import '../inputs/borrey_draw';
 import '../inputs/borrey_code';
@@ -162,16 +162,7 @@ export class BorreyMainView extends LitElement{
                     <label>Split View <input type='checkbox' .checked=${this.split} @change=${this._splitOption}></label>
                     <label>Full Screen View <input type='checkbox' .checked=${this.fullScreen} @change=${this._fullScreenOption}></label>
                 </div>
-                <borrey-input-edit></borrey-input-edit>
-                <input-long></input-long>
-                <input-short></input-short>
-                <input-math></input-math>
-                <input-spreadsheet></input-spreadsheet>
-                <borrey-draw></borrey-draw>
-                <input-choice multiple></input-choice>
-            <input-choice></input-choice>
-            <input-match></input-match>
-                <!--<borrey-question-set></borrey-question-set> -->
+                <question-block></question-block>
             </section>
             <hr id='main-split' tabindex="0" title='resize section' aria-orientation=horizontal role='separator' @dblclick='${ this._splittoggle }' @keydown='${this._splitKeyHandler}' @mousedown='${this._splitmousedown}' @blur='${this._splitblur}' @focus="${this._splitfocus}" />
             <aside id='main-aside' class="">
@@ -184,7 +175,6 @@ export class BorreyMainView extends LitElement{
     _fullScreenOption( event ){
         this.fullScreen=(event.target.checked);
         if(this.fullScreen){
-
             this.openFullscreen();
         }else{
 

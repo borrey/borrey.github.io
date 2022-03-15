@@ -72,16 +72,27 @@ export class BorreyBlock extends LitElement {
 
         this.title = 'Unknown Title';//label
         this.icon = '?';
-        this.content = 'default content';
+        this.content = `default content <borrey-input-edit></borrey-input-edit>
+        
+        
+        <input-math></input-math>
+        <input-spreadsheet></input-spreadsheet>
+        <borrey-draw></borrey-draw>
+        <input-choice multiple></input-choice>
+    <input-choice></input-choice>
+    <input-match></input-match>`;
         this.sections = [
             {
-                url: "/b/22886?context=%5B%2225842%22%2C%22m6%22%2C%22m6_8%22%2C%2225994%22%5D"
+                url: "/b/22886?context=%5B%2225842%22%2C%22m6%22%2C%22m6_8%22%2C%2225994%22%5D",
+                html : `<input-long></input-long>`
             }, 
             {
-                url: "/b/22886?context=%5B%2225842%22%2C%22m6%22%2C%22m6_8%22%2C%2225994%22%5D"
+                url: "/b/22886?context=%5B%2225842%22%2C%22m6%22%2C%22m6_8%22%2C%2225994%22%5D",
+                html : `<input-short></input-short>`
             }, 
             {
-                url: "/b/22886?context=%5B%2225842%22%2C%22m6%22%2C%22m6_8%22%2C%2225994%22%5D"
+                url: "/b/22886?context=%5B%2225842%22%2C%22m6%22%2C%22m6_8%22%2C%2225994%22%5D",
+                html : ``
             }
         ];
         this.meta = [];
@@ -95,7 +106,9 @@ export class BorreyBlock extends LitElement {
             <div class='top-bar'>
                 <h2>${this.title}</h2>
                 <div class='meta'></div>
-                <nav><button>Prev</button><button>Next</button></nav>
+                <nav>
+                    <button>Prev</button><button>Next</button>
+                </nav>
             </div>
             <aside class='side-nav'>
                 <nav class='block-nav'>
@@ -106,6 +119,9 @@ export class BorreyBlock extends LitElement {
                 </section>
             </aside>
             <article class='content'>
+                <section>
+                    <input-preview .html='${this.content}'></input-preview>
+                </section>
                 ${this.sections.map( this._displaySection )}
             </article>
         `;
@@ -114,9 +130,15 @@ export class BorreyBlock extends LitElement {
     _displaySection( section ){
         return html`
             <section>
-            <p>
+            <input-preview .html='${ section.html }'></input-preview>
+            <!--<p>
                 Lorem ipsum dolor sit amet, <a href='/block/23/32' data-internal-link>Sample section</a>
                 </p>
+                
+    -->
+
+                <!--<borrey-question-set></borrey-question-set> -->
+
             </section>
         `;
     }

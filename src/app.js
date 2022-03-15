@@ -80,6 +80,7 @@ export class BorreyApp extends LitElement {
         </footer> 
         <dialog id='app-dialog'>
             hello
+            <button @click=${this.closeDialog}>close</button>
         </dialog>
         `;
       }
@@ -88,6 +89,12 @@ export class BorreyApp extends LitElement {
       }
       _dialog( event ){
           this.dialog.showModal();
+      }
+      closeDialog( event ){
+        if(event){
+            event.preventDefault();
+        }
+        this.dialog.close();
       }
 
       
